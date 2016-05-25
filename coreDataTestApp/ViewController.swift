@@ -11,7 +11,8 @@ import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var myTableView: UITableView!
+    
     var people = [NSManagedObject]()
     
     @IBAction func add(sender: AnyObject) {
@@ -24,7 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                                         
                                         let textField = alert.textFields![0]
                                         self.saveName(textField.text!)
-                                        self.tableView.reloadData()
+                                        self.myTableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel",
@@ -78,6 +79,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         //3
         person.setValue(name, forKey: "name")
+        person.setValue("12", forKey: "age")
         //4
         do {
             try managedContext.save()
@@ -89,9 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\"The List\""
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
+        title = "\"CoreData test app\""
     }
 
     func tableView(tableView: UITableView,
@@ -103,12 +103,35 @@ class ViewController: UIViewController, UITableViewDataSource {
                    cellForRowAtIndexPath
         indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell!
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
         
         let person = people[indexPath.row]
-        cell.textLabel!.text = person.valueForKey("name") as? String
-        
+        cell.name.text = person.valueForKey("name") as? String
+        cell.age.text = "\(person.valueForKey("age") as? String)"
+        cell.photo.image = UIImage(named: "a - \(indexPath.row)")
+//
+//        if person.valueForKey("photo") as? UIImage != nil {
+//            cell.imageView!.image = person.valueForKey("photo") as? UIImage
+//        }
+
         return cell
+    }
+
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            
+            let managedContext = appDelegate.managedObjectContext
+
+            managedContext.deleteObject(people[indexPath.row])
+            appDelegate.saveContext()
+
+            people.removeAtIndex(indexPath.row)
+//            tableView.reloadData()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
     }
     
     override func didReceiveMemoryWarning() {
