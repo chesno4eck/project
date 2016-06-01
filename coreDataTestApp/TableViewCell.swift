@@ -13,6 +13,7 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var age: UILabel!
+    @IBOutlet weak var director: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

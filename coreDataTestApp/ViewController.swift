@@ -8,99 +8,94 @@
 
 import UIKit
 import CoreData
+import AVFoundation
+
+var people = [NSManagedObject]()
+
 
 class ViewController: UIViewController, UITableViewDataSource {
     
+    let camera = Camera()
+
+    
     @IBOutlet weak var myTableView: UITableView!
     
-    var people = [NSManagedObject]()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.fetchRequest()
+    }
     
-    @IBAction func add(sender: AnyObject) {
-        let alert = UIAlertController(title: "New name",
-                                      message: "Add a new name",
-                                      preferredStyle: .Alert)
-        
-        let saveAction = UIAlertAction(title: "Save",
-                                       style: .Default) { (action: UIAlertAction!) -> Void in
-                                        
-                                        let textField = alert.textFields![0]
-                                        self.saveName(textField.text!)
-                                        self.myTableView.reloadData()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .Default) { (action: UIAlertAction!) -> Void in
-        }
-        
-        alert.addTextFieldWithConfigurationHandler {
-            (textField: UITextField!) -> Void in
-        }
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        presentViewController(alert,
-                              animated: true,
-                              completion: nil)
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //1
+    }
+    
+    //MARK: - Core Data methods
+    func fetchRequest() {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
         let managedContext = appDelegate.managedObjectContext
-        
-        //2
         let fetchRequest = NSFetchRequest(entityName:"Person")
         
-        //3
         do {
             let fetchedResults = try managedContext.executeFetchRequest(fetchRequest)  as? [NSManagedObject]
             if let results = fetchedResults {
                 people = results
-            } else {
             }
         } catch {
-            
+            print("Cant fetch \(error)")
         }
-
     }
     
-    func saveName(name: String) {
-        //1
+    func saveInCoreData(name: String) {
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
         let managedContext = appDelegate.managedObjectContext
-        //2
         let entity =  NSEntityDescription.entityForName("Person", inManagedObjectContext:managedContext)
-        
         let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        //3
+        
         person.setValue(name, forKey: "name")
         person.setValue("12", forKey: "age")
-        //4
+        
         do {
             try managedContext.save()
             people.append(person)
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Cant save \(error)")
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "\"CoreData test app\""
-    }
 
-    func tableView(tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+
+    @IBAction func addItemInTable(sender: AnyObject) {
+        let alert = UIAlertController(title: "New name", message: "Add a new name", preferredStyle: .Alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (action: UIAlertAction!) in
+                                        
+                                        let textField = alert.textFields![0]
+                                        self.saveInCoreData(textField.text!)
+                                        self.myTableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (action: UIAlertAction!) in
+        }
+        
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) in
+        }
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: - Table View
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return people.count
     }
     
-    func tableView(tableView: UITableView,
-                   cellForRowAtIndexPath
+    func tableView(tableView: UITableView, cellForRowAtIndexPath
         indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
@@ -109,34 +104,34 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.name.text = person.valueForKey("name") as? String
         cell.age.text = "\(person.valueForKey("age") as? String)"
         cell.photo.image = UIImage(named: "a - \(indexPath.row)")
-//
-//        if person.valueForKey("photo") as? UIImage != nil {
-//            cell.imageView!.image = person.valueForKey("photo") as? UIImage
-//        }
 
         return cell
     }
-
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            
             let managedContext = appDelegate.managedObjectContext
 
             managedContext.deleteObject(people[indexPath.row])
             appDelegate.saveContext()
 
             people.removeAtIndex(indexPath.row)
-//            tableView.reloadData()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    @IBAction func startCam(sender: AnyObject) {
+        camera.startCamera(view)
     }
+    
+       
+    @IBAction func shoot(sender: AnyObject) {
+        camera.takePhoto(view)
+    }
+    
+
 
 
 }

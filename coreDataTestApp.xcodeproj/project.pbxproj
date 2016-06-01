@@ -14,6 +14,8 @@
 		C304DAB31CF2FE610051C36B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C304DAB21CF2FE610051C36B /* Assets.xcassets */; };
 		C304DAB61CF2FE610051C36B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C304DAB41CF2FE610051C36B /* LaunchScreen.storyboard */; };
 		C304DABE1CF407000051C36B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C304DABD1CF407000051C36B /* TableViewCell.swift */; };
+		C3B6B60E1CF5773C000F8912 /* ViewControllerCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6B60D1CF5773C000F8912 /* ViewControllerCompany.swift */; };
+		C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F7F61CFF08A9004C97C7 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		C304DAB51CF2FE610051C36B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C304DAB71CF2FE610051C36B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C304DABD1CF407000051C36B /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		C3B6B60D1CF5773C000F8912 /* ViewControllerCompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCompany.swift; sourceTree = "<group>"; };
+		C3F4F7F61CFF08A9004C97C7 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 			children = (
 				C304DAA81CF2FE610051C36B /* AppDelegate.swift */,
 				C304DAAA1CF2FE610051C36B /* ViewController.swift */,
+				C3F4F7F61CFF08A9004C97C7 /* Camera.swift */,
+				C3B6B60D1CF5773C000F8912 /* ViewControllerCompany.swift */,
 				C304DABD1CF407000051C36B /* TableViewCell.swift */,
 				C304DAAC1CF2FE610051C36B /* Main.storyboard */,
 				C304DAB21CF2FE610051C36B /* Assets.xcassets */,
@@ -141,7 +147,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B6B60E1CF5773C000F8912 /* ViewControllerCompany.swift in Sources */,
 				C304DAAB1CF2FE610051C36B /* ViewController.swift in Sources */,
+				C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */,
 				C304DABE1CF407000051C36B /* TableViewCell.swift in Sources */,
 				C304DAB11CF2FE610051C36B /* coreDataTestApp.xcdatamodeld in Sources */,
 				C304DAA91CF2FE610051C36B /* AppDelegate.swift in Sources */,
@@ -296,6 +304,7 @@
 				C304DABC1CF2FE610051C36B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

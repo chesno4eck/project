@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
-    <entity name="Person" syncable="YES">
-        <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="Company" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="director" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="leaderOf" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Person" syncable="YES">
+        <attribute name="age" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="leaderOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Company" inverseName="director" inverseEntity="Company" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Person" positionX="-263" positionY="-18" width="128" height="88"/>
+        <element name="Company" positionX="-54" positionY="5" width="128" height="73"/>
     </elements>
 </model>

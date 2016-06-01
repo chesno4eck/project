@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CNF-27-Eas">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CNF-27-Eas">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -111,9 +112,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2OZ-tX-I4K">
+                        <leftBarButtonItems>
+                            <barButtonItem title="startCam" id="D8y-yg-YMs">
+                                <connections>
+                                    <action selector="startCam:" destination="BYZ-38-t0r" id="BKc-tS-xEK"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="shoot" id="2mG-lZ-oVT">
+                                <connections>
+                                    <action selector="shoot:" destination="BYZ-38-t0r" id="nmQ-Bf-Psz"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mHk-S9-4I1">
                             <connections>
-                                <action selector="add:" destination="BYZ-38-t0r" id="Rh6-Lp-AR2"/>
+                                <action selector="addItemInTable:" destination="BYZ-38-t0r" id="xc5-Z0-BkC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -124,6 +137,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1482" y="479"/>
+        </scene>
+        <!--View Controller Company-->
+        <scene sceneID="1oJ-1u-CG7">
+            <objects>
+                <viewController id="ykJ-mY-oHL" customClass="ViewControllerCompany" customModule="coreDataTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lUy-bz-57U"/>
+                        <viewControllerLayoutGuide type="bottom" id="tac-jG-2Xm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dGq-3b-jnP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a1p-TR-Qdg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1482" y="1175"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WLK-3s-4FD">
