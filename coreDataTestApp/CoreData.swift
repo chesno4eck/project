@@ -27,7 +27,7 @@ class CoreData: NSObject {
         return []
     }
     
-    class func savePersonWithName(name: String) -> NSManagedObject? {
+    class func savePersonWithName(name: String, andAvatar avatar: UIImage?) -> NSManagedObject? {
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
@@ -35,9 +35,13 @@ class CoreData: NSObject {
         let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         
         person.setValue(name, forKey: "name")
-//        person.setValue("12", forKey: "age")
-//        абвгдеёжзийклмнопрстуфхцчшщъыьэюя
-//        яюэьыъщшчцхфутсрпонмлкйизжёедгвба
+        //converting uiimage to nsdata and writing in coredata
+        if avatar != nil {
+            if let imageData: NSData = UIImagePNGRepresentation(avatar!) {
+                person.setValue(imageData, forKey: "avatar")
+            }
+        }
+
         do {
             try managedContext.save()
             return person
@@ -47,8 +51,12 @@ class CoreData: NSObject {
         return nil
     }
     
-    class func addPhotoToPerson() {
+    class func deleteObject(object: NSManagedObject) {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
         
+        managedContext.deleteObject(object)
+        appDelegate.saveContext()
     }
     
 

@@ -11,6 +11,8 @@ import CoreData
 
 class CameraViewController: UIViewController {
     
+    let cameraManager = CameraManager()
+
     @IBOutlet weak var viewForCameraLayer: UIView!
         
     override func viewWillAppear(animated: Bool) {
@@ -19,7 +21,8 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Camera.camera.startCamera(viewForCameraLayer)
+        
+        cameraManager.addPreviewLayerToView(viewForCameraLayer)
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,9 +31,9 @@ class CameraViewController: UIViewController {
     
     @IBAction func shoot(sender: AnyObject) {
         
-        let takenPhoto = Camera.camera.takePhoto(viewForCameraLayer)
-        
-        NSNotificationCenter.defaultCenter().postNotificationName("photoForAvatar", object: takenPhoto )
+        cameraManager.capturePictureWithCompletition({ (image, error) -> Void in
+            NSNotificationCenter.defaultCenter().postNotificationName("photoForAvatar", object: image )
+        })
         
         self.dismissViewControllerAnimated(true) {
         }

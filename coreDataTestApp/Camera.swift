@@ -19,9 +19,9 @@ class Camera: NSObject {
     var output: AVCaptureStillImageOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
     
-    func startCamera(view: UIView) {
+    func startCamera(viewPhoto: UIView) {
         session = AVCaptureSession()
-        session!.sessionPreset = AVCaptureSessionPresetPhoto
+        session!.sessionPreset = AVCaptureSessionPresetHigh
         
         device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         
@@ -43,10 +43,10 @@ class Camera: NSObject {
         
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
-        previewLayer!.frame = view.bounds
+        previewLayer!.frame = viewPhoto.bounds
         previewLayer!.connection?.videoOrientation = .Portrait
         
-        view.layer.addSublayer(previewLayer!)
+        viewPhoto.layer.addSublayer(previewLayer!)
         
         session!.startRunning()
     }
@@ -57,11 +57,35 @@ class Camera: NSObject {
     }
 
     
-    func takePhoto(view: UIView) -> UIImage {
-        UIGraphicsBeginImageContext(view.frame.size)
+    func takePhoto(viewPhoto: UIView) -> UIImage {
+        UIGraphicsBeginImageContext(viewPhoto.frame.size)
         let takenPhoto = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return takenPhoto
+
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

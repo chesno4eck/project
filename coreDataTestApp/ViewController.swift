@@ -10,18 +10,17 @@ import UIKit
 import CoreData
 import AVFoundation
 
-
-
 class ViewController: UIViewController, UITableViewDataSource {
     
 //    let camera = Camera()
     var imageFromCamera = UIImage?()
-
+    var numberOfCellForAvatar = 0
     var people = [NSManagedObject]()
 
     
     @IBOutlet weak var myTableView: UITableView!
     
+    //MARK: - System Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         people = CoreData.fetchRequest("Person")
@@ -41,29 +40,34 @@ class ViewController: UIViewController, UITableViewDataSource {
         }
     }
     
-    
+    //MARK: - Supporting Methods
     func recevePhoto(notif: NSNotification) {
         imageFromCamera = notif.object as? UIImage
+        
+        //засунуть в person под номером numberOfCellForAvatar imageFromCamera
+        var person = people[numberOfCellForAvatar]
+
+        let nameOfPerson = person.valueForKey("name") as! String
+        CoreData.deleteObject(people[numberOfCellForAvatar])
+        person = CoreData.savePersonWithName(nameOfPerson, andAvatar: imageFromCamera)!
+
+        people.removeAtIndex(numberOfCellForAvatar)
+        people.append(person)
+
+        myTableView.reloadData()
     }
     
     //MARK: - Controls
-//    @IBAction func startCam(sender: AnyObject) {
-//        Camera.camera.startCamera(view)
-//    }
-//    
-//    @IBAction func shoot(sender: AnyObject) {
-//        Camera.camera.takePhoto(view)
-//    }
+
     
-    
-    //MARK: - Core Data methods
+    //MARK: - Core Data Methods
     @IBAction func addItemInTable(sender: AnyObject) {
         let alert = UIAlertController(title: "New name", message: "Add a new name", preferredStyle: .Alert)
         
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (action: UIAlertAction!) in
                                         
             let textField = alert.textFields![0]
-            if let person = CoreData.savePersonWithName(textField.text!) as NSManagedObject? {
+            if let person = CoreData.savePersonWithName(textField.text!, andAvatar: nil) as NSManagedObject? {
                 self.people.append(person)
             }
             self.myTableView.reloadData()
@@ -91,37 +95,35 @@ class ViewController: UIViewController, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! TableViewCell
         
+        cell.tag = indexPath.row
+
         let person = people[indexPath.row]
         cell.name.text = person.valueForKey("name") as? String
         cell.age.text = "\(person.valueForKey("age") as? String)"
-        if imageFromCamera != nil {
-            cell.photo.image = imageFromCamera!
+        if person.valueForKey("avatar") as? NSData != nil {
+            if let imageFromData = UIImage(data: (person.valueForKey("avatar") as? NSData)!, scale:1.0) {
+                cell.photo.image = imageFromData
+            }
         } else {
             cell.photo.image = UIImage(named: "a - \(indexPath.row)")
         }
         
-        cell.tag = indexPath.row
 
         return cell
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            CoreData.deleteObject(people[indexPath.row])
             
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            let managedContext = appDelegate.managedObjectContext
-
-            managedContext.deleteObject(people[indexPath.row])
-            appDelegate.saveContext()
-
             people.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
     
     //MARK: - Segues
-    
-    func presentCameraController()  {
+    func presentCameraController(notification: NSNotification)  {
+        self.numberOfCellForAvatar = (notification.object as? Int)!
         let vc = storyboard?.instantiateViewControllerWithIdentifier("cameraVC")
         self.presentViewController(vc!, animated: true, completion: nil)
     }

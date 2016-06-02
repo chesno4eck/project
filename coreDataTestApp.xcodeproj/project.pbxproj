@@ -17,6 +17,7 @@
 		C3B6B60E1CF5773C000F8912 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */; };
 		C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F7F61CFF08A9004C97C7 /* Camera.swift */; };
 		C3F4F7F91CFFDFD3004C97C7 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */; };
+		C3F4F8011D00391F004C97C7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F8001D00391F004C97C7 /* CameraManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C3F4F7F61CFF08A9004C97C7 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		C3F4F8001D00391F004C97C7 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,14 +68,13 @@
 			children = (
 				C304DAA81CF2FE610051C36B /* AppDelegate.swift */,
 				C3F4F7FB1CFFFF6E004C97C7 /* Controllers */,
-				C3F4F7F61CFF08A9004C97C7 /* Camera.swift */,
-				C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */,
-				C304DABD1CF407000051C36B /* TableViewCell.swift */,
+				C3F4F7FC1D002085004C97C7 /* Model */,
+				C3F4F7FD1D00209B004C97C7 /* View */,
 				C304DAAC1CF2FE610051C36B /* Main.storyboard */,
+				C304DAAF1CF2FE610051C36B /* coreDataTestApp.xcdatamodeld */,
 				C304DAB21CF2FE610051C36B /* Assets.xcassets */,
 				C304DAB41CF2FE610051C36B /* LaunchScreen.storyboard */,
 				C304DAB71CF2FE610051C36B /* Info.plist */,
-				C304DAAF1CF2FE610051C36B /* coreDataTestApp.xcdatamodeld */,
 			);
 			path = coreDataTestApp;
 			sourceTree = "<group>";
@@ -85,6 +86,24 @@
 				C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		C3F4F7FC1D002085004C97C7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */,
+				C3F4F8001D00391F004C97C7 /* CameraManager.swift */,
+				C3F4F7F61CFF08A9004C97C7 /* Camera.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C3F4F7FD1D00209B004C97C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C304DABD1CF407000051C36B /* TableViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +179,7 @@
 			files = (
 				C3B6B60E1CF5773C000F8912 /* CameraViewController.swift in Sources */,
 				C304DAAB1CF2FE610051C36B /* ViewController.swift in Sources */,
+				C3F4F8011D00391F004C97C7 /* CameraManager.swift in Sources */,
 				C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */,
 				C304DABE1CF407000051C36B /* TableViewCell.swift in Sources */,
 				C3F4F7F91CFFDFD3004C97C7 /* CoreData.swift in Sources */,
