@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -79,6 +78,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndZ-WA-9Br">
+                                                    <rect key="frame" x="13" y="13" width="81" height="83"/>
+                                                    <connections>
+                                                        <action selector="avatarPressed:" destination="bJL-Ix-911" eventType="touchUpInside" id="JfX-su-AQX"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="vKL-Vy-EzP" firstAttribute="leading" secondItem="269-zn-EcU" secondAttribute="trailing" constant="13" id="4ge-Xf-OHM"/>
@@ -112,18 +117,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2OZ-tX-I4K">
-                        <leftBarButtonItems>
-                            <barButtonItem title="startCam" id="D8y-yg-YMs">
-                                <connections>
-                                    <action selector="startCam:" destination="BYZ-38-t0r" id="BKc-tS-xEK"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="shoot" id="2mG-lZ-oVT">
-                                <connections>
-                                    <action selector="shoot:" destination="BYZ-38-t0r" id="nmQ-Bf-Psz"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mHk-S9-4I1">
                             <connections>
                                 <action selector="addItemInTable:" destination="BYZ-38-t0r" id="xc5-Z0-BkC"/>
@@ -138,10 +131,10 @@
             </objects>
             <point key="canvasLocation" x="1482" y="479"/>
         </scene>
-        <!--View Controller Company-->
+        <!--Camera View Controller-->
         <scene sceneID="1oJ-1u-CG7">
             <objects>
-                <viewController id="ykJ-mY-oHL" customClass="ViewControllerCompany" customModule="coreDataTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cameraVC" id="ykJ-mY-oHL" customClass="CameraViewController" customModule="coreDataTestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lUy-bz-57U"/>
                         <viewControllerLayoutGuide type="bottom" id="tac-jG-2Xm"/>
@@ -149,10 +142,39 @@
                     <view key="view" contentMode="scaleToFill" id="dGq-3b-jnP">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlg-j9-nWs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgo-Vw-xsX">
+                                <rect key="frame" x="249" y="513" width="102" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="GQH-bq-wJg"/>
+                                    <constraint firstAttribute="width" constant="102" id="jOc-Ck-dly"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Shoot!"/>
+                                <connections>
+                                    <action selector="shoot:" destination="ykJ-mY-oHL" eventType="touchUpInside" id="mIr-jf-2vO"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tac-jG-2Xm" firstAttribute="top" secondItem="hgo-Vw-xsX" secondAttribute="bottom" id="9cl-Ro-HT2"/>
+                            <constraint firstItem="dlg-j9-nWs" firstAttribute="top" secondItem="dGq-3b-jnP" secondAttribute="topMargin" id="UeA-OT-7q1"/>
+                            <constraint firstItem="hgo-Vw-xsX" firstAttribute="centerX" secondItem="dGq-3b-jnP" secondAttribute="centerX" id="c4m-m9-eoS"/>
+                            <constraint firstItem="dlg-j9-nWs" firstAttribute="bottom" secondItem="dGq-3b-jnP" secondAttribute="bottomMargin" id="fMG-Vj-Sol"/>
+                            <constraint firstItem="dlg-j9-nWs" firstAttribute="leading" secondItem="dGq-3b-jnP" secondAttribute="leadingMargin" constant="-20" id="lih-c8-okj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dlg-j9-nWs" secondAttribute="trailing" constant="-20" id="xxl-X2-CYi"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="viewForCameraLayer" destination="dlg-j9-nWs" id="OZ3-m7-Ke2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1p-TR-Qdg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

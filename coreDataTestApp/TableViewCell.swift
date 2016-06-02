@@ -25,5 +25,9 @@ class TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    @IBAction func avatarPressed(sender: UIButton) {
+        NSNotificationCenter.defaultCenter().postNotificationName("cellAvatarPressed", object: self.tag)
+    }
 
 }

@@ -11,13 +11,13 @@ import AVFoundation
 
 class Camera: NSObject {
     
+    static var camera = Camera()
+    
     var session: AVCaptureSession?
     var device: AVCaptureDevice?
     var input: AVCaptureDeviceInput?
     var output: AVCaptureStillImageOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var takenPhoto = UIImage()
-
     
     func startCamera(view: UIView) {
         session = AVCaptureSession()
@@ -50,12 +50,18 @@ class Camera: NSObject {
         
         session!.startRunning()
     }
+    
+    func stopCamera(view: UIView) {
+        session!.stopRunning()
+        previewLayer = nil
+    }
 
     
-    func takePhoto(view: UIView) {
+    func takePhoto(view: UIView) -> UIImage {
         UIGraphicsBeginImageContext(view.frame.size)
-        self.takenPhoto = UIGraphicsGetImageFromCurrentImageContext()
+        let takenPhoto = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        return takenPhoto
     }
     
 }

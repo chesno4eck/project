@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 
-class ViewControllerCompany: UIViewController {
+class CameraViewController: UIViewController {
     
+    @IBOutlet weak var viewForCameraLayer: UIView!
         
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -18,14 +19,21 @@ class ViewControllerCompany: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\"CoreData\""
+        Camera.camera.startCamera(viewForCameraLayer)
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    
+    @IBAction func shoot(sender: AnyObject) {
+        
+        let takenPhoto = Camera.camera.takePhoto(viewForCameraLayer)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("photoForAvatar", object: takenPhoto )
+        
+        self.dismissViewControllerAnimated(true) {
+        }
+    }
 }
 

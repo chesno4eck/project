@@ -10,19 +10,24 @@ import UIKit
 import CoreData
 import AVFoundation
 
-var people = [NSManagedObject]()
 
 
 class ViewController: UIViewController, UITableViewDataSource {
     
-    let camera = Camera()
+//    let camera = Camera()
+    var imageFromCamera = UIImage?()
+
+    var people = [NSManagedObject]()
 
     
     @IBOutlet weak var myTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetchRequest()
+        people = CoreData.fetchRequest("Person")
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.presentCameraController), name: "cellAvatarPressed", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.recevePhoto), name: "photoForAvatar", object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,51 +36,37 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if imageFromCamera != nil {
+            
+        }
     }
+    
+    
+    func recevePhoto(notif: NSNotification) {
+        imageFromCamera = notif.object as? UIImage
+    }
+    
+    //MARK: - Controls
+//    @IBAction func startCam(sender: AnyObject) {
+//        Camera.camera.startCamera(view)
+//    }
+//    
+//    @IBAction func shoot(sender: AnyObject) {
+//        Camera.camera.takePhoto(view)
+//    }
+    
     
     //MARK: - Core Data methods
-    func fetchRequest() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName:"Person")
-        
-        do {
-            let fetchedResults = try managedContext.executeFetchRequest(fetchRequest)  as? [NSManagedObject]
-            if let results = fetchedResults {
-                people = results
-            }
-        } catch {
-            print("Cant fetch \(error)")
-        }
-    }
-    
-    func saveInCoreData(name: String) {
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let entity =  NSEntityDescription.entityForName("Person", inManagedObjectContext:managedContext)
-        let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        person.setValue(name, forKey: "name")
-        person.setValue("12", forKey: "age")
-        
-        do {
-            try managedContext.save()
-            people.append(person)
-        } catch let error as NSError  {
-            print("Cant save \(error)")
-        }
-    }
-
-
     @IBAction func addItemInTable(sender: AnyObject) {
         let alert = UIAlertController(title: "New name", message: "Add a new name", preferredStyle: .Alert)
         
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (action: UIAlertAction!) in
                                         
-                                        let textField = alert.textFields![0]
-                                        self.saveInCoreData(textField.text!)
-                                        self.myTableView.reloadData()
+            let textField = alert.textFields![0]
+            if let person = CoreData.savePersonWithName(textField.text!) as NSManagedObject? {
+                self.people.append(person)
+            }
+            self.myTableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (action: UIAlertAction!) in
@@ -103,7 +94,13 @@ class ViewController: UIViewController, UITableViewDataSource {
         let person = people[indexPath.row]
         cell.name.text = person.valueForKey("name") as? String
         cell.age.text = "\(person.valueForKey("age") as? String)"
-        cell.photo.image = UIImage(named: "a - \(indexPath.row)")
+        if imageFromCamera != nil {
+            cell.photo.image = imageFromCamera!
+        } else {
+            cell.photo.image = UIImage(named: "a - \(indexPath.row)")
+        }
+        
+        cell.tag = indexPath.row
 
         return cell
     }
@@ -122,17 +119,12 @@ class ViewController: UIViewController, UITableViewDataSource {
         }
     }
     
-    @IBAction func startCam(sender: AnyObject) {
-        camera.startCamera(view)
-    }
+    //MARK: - Segues
     
-       
-    @IBAction func shoot(sender: AnyObject) {
-        camera.takePhoto(view)
+    func presentCameraController()  {
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("cameraVC")
+        self.presentViewController(vc!, animated: true, completion: nil)
     }
-    
-
-
 
 }
 
