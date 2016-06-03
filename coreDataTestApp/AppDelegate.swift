@@ -78,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
         }
-        
         return coordinator
     }()
 

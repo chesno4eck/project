@@ -16,6 +16,7 @@
 		C304DABE1CF407000051C36B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C304DABD1CF407000051C36B /* TableViewCell.swift */; };
 		C3B6B60E1CF5773C000F8912 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */; };
 		C3C4FECE1D01435E00B19751 /* CompaniesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4FECD1D01435E00B19751 /* CompaniesViewController.swift */; };
+		C3C4FED01D01513B00B19751 /* ChoiseDirectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4FECF1D01513B00B19751 /* ChoiseDirectorViewController.swift */; };
 		C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F7F61CFF08A9004C97C7 /* Camera.swift */; };
 		C3F4F7F91CFFDFD3004C97C7 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */; };
 		C3F4F8011D00391F004C97C7 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F4F8001D00391F004C97C7 /* CameraManager.swift */; };
@@ -33,6 +34,7 @@
 		C304DABD1CF407000051C36B /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C3C4FECD1D01435E00B19751 /* CompaniesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompaniesViewController.swift; sourceTree = "<group>"; };
+		C3C4FECF1D01513B00B19751 /* ChoiseDirectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiseDirectorViewController.swift; sourceTree = "<group>"; };
 		C3F4F7F61CFF08A9004C97C7 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		C3F4F7F81CFFDFD3004C97C7 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		C3F4F8001D00391F004C97C7 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				C304DAAA1CF2FE610051C36B /* ViewController.swift */,
 				C3C4FECD1D01435E00B19751 /* CompaniesViewController.swift */,
 				C3B6B60D1CF5773C000F8912 /* CameraViewController.swift */,
+				C3C4FECF1D01513B00B19751 /* ChoiseDirectorViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				C3B6B60E1CF5773C000F8912 /* CameraViewController.swift in Sources */,
 				C304DAAB1CF2FE610051C36B /* ViewController.swift in Sources */,
 				C3F4F8011D00391F004C97C7 /* CameraManager.swift in Sources */,
+				C3C4FED01D01513B00B19751 /* ChoiseDirectorViewController.swift in Sources */,
 				C3F4F7F71CFF08A9004C97C7 /* Camera.swift in Sources */,
 				C304DABE1CF407000051C36B /* TableViewCell.swift in Sources */,
 				C3F4F7F91CFFDFD3004C97C7 /* CoreData.swift in Sources */,

@@ -9,10 +9,10 @@
 import UIKit
 import CoreData
 
+var companies = [NSManagedObject]()
 
 class CompaniesViewController: UITableViewController {
 
-    var companies = [NSManagedObject]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,52 +26,80 @@ class CompaniesViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+    //MARK: - Core Data Methods
+    @IBAction func addItemInTable(sender: AnyObject) {
+        let alert = UIAlertController(title: "New Company", message: "Add a new Company name", preferredStyle: .Alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (action: UIAlertAction!) in
+            
+            let textField = alert.textFields![0]
+            if let company = CoreData.saveCompanyWithName(textField.text!, andDirectora: people[0]) as NSManagedObject? {
+                companies.append(company)
+            }
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) { (action: UIAlertAction!) in
+        }
+        
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) in
+        }
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
+
+    
+    // MARK: - Table view data source
+//
+//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        return 1
+//    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return companies.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellCompanies", forIndexPath: indexPath)
+        let company = companies[indexPath.row]
+        
+        cell.textLabel?.text = company.valueForKey("name") as? String
+        cell.detailTextLabel?.text = company.valueForKey("director")?.valueForKey("name") as? String
+        
         return cell
     }
-    */
+ 
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
+            CoreData.deleteObject(companies[indexPath.row])
+            
+            companies.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("pickerDirectorController")
+        self.presentViewController(vc!, animated: true, completion: nil)
+    }
 
     /*
     // Override to support rearranging the table view.

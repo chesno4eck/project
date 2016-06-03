@@ -51,6 +51,25 @@ class CoreData: NSObject {
         return nil
     }
     
+    class func saveCompanyWithName(name: String, andDirectora director: NSManagedObject) -> NSManagedObject? {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        let entity =  NSEntityDescription.entityForName("Company", inManagedObjectContext: managedContext)
+        let company = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+        
+        company.setValue(name, forKey: "name")
+        company.setValue(director, forKey: "director")
+        
+        do {
+            try managedContext.save()
+            return company
+        } catch let error as NSError  {
+            print("Cant save \(error)")
+        }
+        return nil
+    }
+    
     class func deleteObject(object: NSManagedObject) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext

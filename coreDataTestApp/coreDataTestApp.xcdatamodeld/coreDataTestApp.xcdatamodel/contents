@@ -8,10 +8,10 @@
         <attribute name="age" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="leaderOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Company" inverseName="director" inverseEntity="Company" syncable="YES"/>
+        <relationship name="leaderOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="director" inverseEntity="Company" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Company" positionX="-54" positionY="5" width="128" height="73"/>
+        <element name="Company" positionX="-54" positionY="-10" width="128" height="73"/>
         <element name="Person" positionX="-263" positionY="-18" width="128" height="103"/>
     </elements>
 </model>

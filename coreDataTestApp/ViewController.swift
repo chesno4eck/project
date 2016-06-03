@@ -9,13 +9,13 @@
 import UIKit
 import CoreData
 import AVFoundation
+var people = [NSManagedObject]()
 
 class ViewController: UIViewController, UITableViewDataSource {
     
 //    let camera = Camera()
     var imageFromCamera = UIImage?()
     var numberOfCellForAvatar = 0
-    var people = [NSManagedObject]()
 
     
     @IBOutlet weak var myTableView: UITableView!
@@ -31,6 +31,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        myTableView.reloadData()
     }
     
     //MARK: - Supporting Methods
@@ -60,7 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                                         
             let textField = alert.textFields![0]
             if let person = CoreData.savePersonWithName(textField.text!, andAvatar: nil) as NSManagedObject? {
-                self.people.append(person)
+                people.append(person)
             }
             self.myTableView.reloadData()
         }
@@ -91,7 +92,14 @@ class ViewController: UIViewController, UITableViewDataSource {
 
         let person = people[indexPath.row]
         cell.name.text = person.valueForKey("name") as? String
-        cell.age.text = "\(person.valueForKey("age") as? String)"
+        
+        if person.valueForKey("leaderOf")  != nil {
+            let pers = person.valueForKey("leaderOf") as! NSManagedObject
+            let company = pers.valueForKey("name") as! String
+            cell.age.text = company
+        }
+
+//        cell.age.text = person.valueForKey("leaderOf")?.valueForKey("name") as? String
         if person.valueForKey("avatar") as? NSData != nil {
             if let imageFromData = UIImage(data: (person.valueForKey("avatar") as? NSData)!, scale:1.0) {
                 cell.photo.image = imageFromData
