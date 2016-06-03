@@ -29,10 +29,6 @@ class ViewController: UIViewController, UITableViewDataSource {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.recevePhoto), name: "photoForAvatar", object: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if imageFromCamera != nil {
@@ -44,7 +40,6 @@ class ViewController: UIViewController, UITableViewDataSource {
     func recevePhoto(notif: NSNotification) {
         imageFromCamera = notif.object as? UIImage
         
-        //засунуть в person под номером numberOfCellForAvatar imageFromCamera
         var person = people[numberOfCellForAvatar]
 
         let nameOfPerson = person.valueForKey("name") as! String
