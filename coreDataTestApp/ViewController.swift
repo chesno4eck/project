@@ -31,9 +31,6 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if imageFromCamera != nil {
-            
-        }
     }
     
     //MARK: - Supporting Methods
